@@ -1,11 +1,14 @@
 <!doctype html>
+
+{% load static %}
+
 <html lang="en" class="h-100" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AskMe</title>
-    <link href="../static/css/bootstrap.css" rel="stylesheet">
-    <link href="../static/css/style.css" rel="stylesheet">
+    <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
+    <link href="{% static "css/style.css" %}" rel="stylesheet">
 </head>
 <body class="d-flex flex-column h-100">
 
@@ -38,7 +41,7 @@
                     <ul class="navbar-nav me-auto mb-2 mb-md-0">
                         <li class="nav-item">
                             <div class="avatar">
-                                <img src="../static/img/Avatar1.png" alt=""/>
+                                <img src="../../static/img/Avatar1.png" alt=""/>
                             </div>
                         </li>
                         <li class="nav-item ms-4">
@@ -62,7 +65,8 @@
         <div class="row" style="margin-left: 40px; padding-top: 40px">
             <div class="col-7">
 
-
+                {% block content %}
+                {% endblock %}
 
             </div>
             <div class="col-5" style="padding-right: 100px;">
