@@ -5,7 +5,8 @@ from app import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
-    path('tagQuestion/<str:tag>', views.tagQuestion, name='tagQuestion'),
+    path('hot', views.hot_questions, name='hot'),
+    path('tag/<str:tag>', views.tag_question, name='tag_question'),
     path('question/<int:question_id>', views.question, name='question'),
     path('ask', views.ask, name='ask'),
     path('login', views.login, name='login'),

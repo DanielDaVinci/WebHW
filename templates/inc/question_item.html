@@ -4,9 +4,7 @@
         <div class="row">
             <div class="col-2">
                 <div class="avatar_question mx-auto">
-                    <a href="#">
-                        <img src="{% static "img/Avatar3.png" %}" alt=""/>
-                    </a>
+                    <img src="{% static "img/Avatar3.png" %}" alt=""/>
                 </div>
             </div>
             <div class="col-10">
@@ -19,8 +17,8 @@
         <div class="row">
             <div class="col-2">
                 <div class="text-center position-relative top-50 start-50 translate-middle">
-                    <input type="checkbox" class="btn-check" id="btn-check-outlined3" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btn-check-outlined3">5</label>
+                    <input type="checkbox" class="btn-check" id="{{ question.id }}" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="{{ question.id }}">{{ question.like_number }}</label>
                 </div>
             </div>
             <div class="col-5">
@@ -34,7 +32,9 @@
                         <li class="nav-item">
                             <h5 style="margin-top:10px;">Tags:</h5>
                             {% for tag in question.tags %}
-                                {% include 'inc/tag_item.html' %}
+                                <li class="nav-item popular-tag">
+                                    <a class="nav-link " href="{% url 'tag_question' tag=tag %}">{{ tag }}</a>
+                                </li>
                             {% endfor %}
                         </li>
                     </ul>

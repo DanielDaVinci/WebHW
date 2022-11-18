@@ -10,30 +10,25 @@
                     </div>
                 </div>
                 <div class="col-10">
-                    <div class="question-text">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A autem consequuntur cum
-                        dolores ducimus hic nesciunt odio optio placeat praesentium.
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A autem consequuntur cum
-                        dolores ducimus hic nesciunt odio optio placeat praesentium.
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A autem consequuntur cum
-                        dolores ducimus hic nesciunt odio optio placeat praesentium.
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A autem consequuntur cum
-                        dolores ducimus hic nesciunt odio optio placeat praesentium.
-                    </div>
+                    <div class="question-text">{{ answer.text }}</div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-2">
                     <div class="text-center position-relative top-50 start-50 translate-middle">
-                        <input type="checkbox" class="btn-check" id="btn-check-outlined3" autocomplete="off">
-                        <label class="btn btn-outline-primary" for="btn-check-outlined3">5</label>
+                        <input type="checkbox" class="btn-check" id="{{ answer.id }}" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="{{ answer.id }}">{{ answer.like_number }}</label>
                     </div>
                 </div>
                 <div class="col-10">
                     <div class="text-start">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option1">
-                            <label class="form-check-label" for="inlineCheckbox2">Correct answer!</label>
+                            {% if answer.correct %}
+                                <input class="form-check-input" type="checkbox" id="{{ answer.id }}" value="option1" checked="">
+                            {% else %}
+                                <input class="form-check-input" type="checkbox" id="{{ answer.id }}" value="option1">
+                            {% endif %}
+                            <label class="form-check-label" for="{{ answer.id }}">Correct answer!</label>
                         </div>
                     </div>
                 </div>
