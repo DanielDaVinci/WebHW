@@ -29,14 +29,12 @@
                 </div>
             </div>
             <div class="col-5">
-                <div class="question_tag">
+                <div class="question_tag text-center">
                     <ul class="nav">
                         <li class="nav-item">
                             <h5 style="margin-top:10px;">Tags:</h5>
                             {% for tag in question.tags %}
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="#">{{ tag }}</a>
-                                </li>
+                                {% include 'inc/tag_item.html' %}
                             {% endfor %}
                         </li>
                     </ul>

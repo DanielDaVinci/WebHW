@@ -4,12 +4,13 @@ from django.views.decorators.http import require_GET
 from . import models
 
 def index(request):
-    context = {'questions': models.QUESTIONS}
+    context={'questions': models.QUESTIONS}
     return render(request, 'index.html', context=context)
 
 
 def tagQuestion(request, tag : str):
-    return render(request, 'tagQuestions.html')
+    context={'tag': tag, 'questions': models.QUESTIONS}
+    return render(request, 'tagQuestions.html', context=context)
 
 
 def question(request, question_id: int):
