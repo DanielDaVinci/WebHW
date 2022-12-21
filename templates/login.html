@@ -4,20 +4,24 @@
 
 {% block content %}
     <h1>Log in</h1>
-    <h5 style="color:red; margin-top:20px;">Sorry, wrong password! </h5>
-    <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-addon1">Login</span>
-        <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-               aria-describedby="basic-addon1" style="margin-top:20px;">
-    </div>
+    <form action="/login/" method="post">
+        {% if Invalid %}
+            <h5 style="color:red; margin-top:20px;">{{ Exception }}</h5>
+        {% endif %}
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Login</span>
+            <input name="username" type="text" class="form-control" placeholder="Username" aria-label="Username"
+                   aria-describedby="basic-addon1" style="margin-top:20px;" value="">
+        </div>
 
-    <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-addon2">Password</span>
-        <input type="text" class="form-control" placeholder="********" aria-label="********"
-               aria-describedby="basic-addon2" style="margin-top:20px;">
-    </div>
-    <div class="ContainerWhite" style="margin-top:30px;">
-        <button class="btn btn-outline-success LoginButton">Save all</button>
-        <a href="#" class="link-primary" style="margin-top:5px;">Create new account!</a>
-    </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon2">Password</span>
+            <input name="password" type="password" class="form-control" placeholder="Password"
+                   aria-describedby="basic-addon2" style="margin-top:20px;" value="">
+        </div>
+        <div class="ContainerWhite" style="margin-top:30px;">
+            <button class="btn btn-outline-success LoginButton">Log in</button>
+            <a href="{% url 'signup' %}" class="link-primary" style="margin-top:5px;">Create new account!</a>
+        </div>
+    </form>
 {% endblock %}

@@ -8,7 +8,7 @@
             <div class="col-2">
                 <div class="avatar_question mx-auto">
                     <a href="#">
-                        <img src="{% static 'img/../media/Avatar3.png' %}" alt=""/>
+                        <img src="{% static 'img/../../static/img/Avatar3.png' %}" alt=""/>
                     </a>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                             <h5 style="margin-top:10px;">Tag:</h5>
                             {% for tag in question.tags %}
                                 <li class="nav-item popular-tag">
-                                    <a class="nav-link " href="{% url 'tag_question' tag_id=tag.id %}">{{ tag }}</a>
+                                    <a class="nav-link " href="{% url 'tag_question' tag_name=tag %}">{{ tag }}</a>
                                 </li>
                             {% endfor %}
                         </li>
@@ -47,9 +47,11 @@
             {% include 'inc/answer_item.html' %}
         {% endfor %}
     </div>
-    <div class="container" style="padding-top: 20px">
-        <textarea class="form-control" id="exampleFormControlTextarea2" rows="6"
-                  placeholder="Enter your answer here..."></textarea>
-        <button class="btn btn-outline-success" style="margin-top: 10px; margin-bottom: 10px">Ask!</button>
-    </div>
+    <form action="{% url 'question' question_id=question.id %}" method="post">
+        <div class="container" style="padding-top: 20px">
+            <textarea name="answer" class="form-control" id="exampleFormControlTextarea2" rows="6"
+                    placeholder="Enter your answer here..."></textarea>
+            <button type="submit" class="btn btn-outline-success" style="margin-top: 10px; margin-bottom: 10px">Respond!</button>
+        </div>
+    </form>
 {% endblock %}

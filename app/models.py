@@ -4,12 +4,25 @@ from django.db import models
 from django.http import Http404
 
 
+class CurrentUser:
+    profile = None
+    is_auth = False
+
+
+class ProfileManager(models.Manager):
+    def find_by_user(self, user):
+        return self.get(user__exact=user)
+
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(blank=True, null=True, upload_to="media")
+    nickname = models.CharField(max_length=50)
+    avatar = models.ImageField(blank=True, null=True, upload_to="uploads/images/")
 
     def __str__(self):
         return self.user.username
+
+    objects = ProfileManager()
 
 class QuestionManager(models.Manager):
     def get_hot_questions(self):
@@ -18,7 +31,7 @@ class QuestionManager(models.Manager):
     def get_new_questions(self):
         return self.order_by('-date')
 
-    def get_tagged_questions(self, tag):
+    def get_questions_by_tag(self, tag):
         return self.filter(tag__exact=tag)
 
     def get_questions(self):
@@ -53,14 +66,22 @@ class Question(models.Model):
 
     objects = QuestionManager()
     def __str__(self):
-        return f'{self.title}'
+        return self.title
 
 
 class TagManager(models.Manager):
-
     def get_tags_by_question(self, question):
         return self.filter(question__exact=question)
 
+    def find_by_name(self, name):
+        return self.get(name__exact=name)
+
+    def find_id_by_name(self, name):
+        try:
+            vote = self.get(name__exact=name).id
+        except ObjectDoesNotExist:
+            raise Http404
+        return vote
     def find_by_id(self, id):
         try:
             vote = self.get(pk=id)
@@ -78,7 +99,7 @@ class Tag(models.Model):
     question = models.ManyToManyField(Question)
 
     def __str__(self):
-        return f'{self.name}'
+        return self.name
 
 
 class AnswerManager(models.Manager):
@@ -101,7 +122,7 @@ class Answer(models.Model):
     objects = AnswerManager()
 
     def __str__(self):
-        return  self.text[:100]
+        return self.text[:100]
 
 
 class LikeQuestionManager(models.Manager):
@@ -126,11 +147,3 @@ class LikeAnswer(models.Model):
     answer = models.ForeignKey(Answer, models.CASCADE)
 
     objects = LikeAnswerManager()
-
-
-OPTIONS = {
-    'username': 'Cat',
-    'password': 'password',
-    'nickname': 'Bird',
-    'is_auth': True
-}

@@ -24,10 +24,10 @@
                 <div class="row">
                     <div class="col-4 position-relative">
                         <div class="collapse navbar-collapse" id="navbarCollapse">
-                            <form class="d-flex" role="search">
-                                <input class="form-control me-2" type="search" placeholder="Search"
-                                       aria-label="Search">
-                                <button class="btn btn-outline-success" type="submit">Search</button>
+                            <form action="#" method="post" class="d-flex" role="search">
+                                <input id="search_tag" name="search_tag" class="form-control me-2" type="search" placeholder="Search"
+                                       aria-label="Search" value="">
+                                <button type="submit" class="btn btn-outline-success">Search</button>
                             </form>
                         </div>
                     </div>
@@ -39,19 +39,19 @@
                 </div>
             </div>
             <div class="col-2">
-                {% if options.is_auth %}
+                {% if current_user.is_auth %}
                     <div class="row">
                         <ul class="navbar-nav me-auto mb-2 mb-md-0">
                             <li class="nav-item">
                                 <div class="avatar">
-                                    <img src="{% static 'img/../../media/Avatar1.png' %}" alt=""/>
+                                    <img src="{% static 'img/../../static/img/Avatar1.png' %}" alt=""/>
                                 </div>
                             </li>
                             <li class="nav-item ms-4">
                                 <div class="row">
-                                    <h4 style="color: white">{{ options.nickname }}</h4>
+                                    <h4 style="color: white">{{ current_user.profile.nickname }}</h4>
                                     <a class="col-6" href="{% url 'settings' %}">Settings</a>
-                                    <a class="col-6" href="#">Log out</a>
+                                    <a class="col-6" href="{% url 'logout' %}">Log out</a>
                                 </div>
                             </li>
                         </ul>
@@ -61,6 +61,7 @@
                         <ul class="navbar-nav me-auto mb-2 mb-md-0">
                             <li class="nav-item ms-4">
                                 <a class="col-6" href="{% url 'login' %}">Log In</a>
+                                <a class="col-6" href="{% url 'signup' %}">Sign Up</a>
                             </li>
                         </ul>
                     </div>
@@ -85,7 +86,7 @@
                     <ul class="nav">
                         {% for tag in base_tags %}
                             <li class="nav-item popular-tag">
-                                <a class="nav-link active" aria-current="page" href="{% url 'tag_question' tag_id=tag.id %}">{{ tag.name }}</a>
+                                <a class="nav-link active" aria-current="page" href="{% url 'tag_question' tag_name=tag %}">{{ tag }}</a>
                             </li>
                         {% endfor %}
                     </ul>

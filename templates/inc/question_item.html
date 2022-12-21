@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-2">
                 <div class="avatar_question mx-auto">
-                    <img src="{% static "img/../../media/Avatar3.png" %}" alt=""/>
+                    <img src="{% static "img/../../static/img/Avatar3.png" %}" alt=""/>
                 </div>
             </div>
             <div class="col-10">
@@ -33,7 +33,7 @@
                             <h5 style="margin-top:10px;">Tags:</h5>
                             {% for tag in question.tags %}
                                 <li class="nav-item popular-tag">
-                                    <a class="nav-link " href="{% url 'tag_question' tag_id=tag.id %}">{{ tag }}</a>
+                                    <a class="nav-link " href="{% url 'tag_question' tag_name=tag %}">{{ tag }}</a>
                                 </li>
                             {% endfor %}
                         </li>
