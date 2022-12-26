@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.http import Http404
+from rest_framework import serializers
 
 
 class CurrentUser:
@@ -12,6 +13,13 @@ class CurrentUser:
 class ProfileManager(models.Manager):
     def find_by_user(self, user):
         return self.get(user__exact=user)
+
+    def find_by_id(self, id):
+        try:
+            vote = self.get(pk=id)
+        except ObjectDoesNotExist:
+            raise Http404
+        return vote
 
 
 class Profile(models.Model):
@@ -26,10 +34,10 @@ class Profile(models.Model):
 
 class QuestionManager(models.Manager):
     def get_hot_questions(self):
-        return self.filter(status__exact='h')
+        return self.filter(status__exact='h')[:12]
 
     def get_new_questions(self):
-        return self.order_by('-date')
+        return self.order_by('-date')[:12]
 
     def get_questions_by_tag(self, tag):
         return self.filter(tag__exact=tag)

@@ -1,11 +1,15 @@
 from django.contrib import auth
 from django.core.paginator import Paginator
-from django.forms import BaseForm
 from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse, path
+from rest_framework.renderers import JSONRenderer
+from rest_framework.response import Response
+from rest_framework.decorators import api_view, renderer_classes
+
 from . import models
 from . import forms
+from .modelSerializers import QuestionSerializer, ProfileSerializer, AnswerSerializer
 from .tests import FillDB
 
 base_context = {'base_tags': models.Tag.objects.get_tags(),
@@ -15,7 +19,7 @@ base_context = {'base_tags': models.Tag.objects.get_tags(),
 # Sites
 
 def index(request):
-    FillDB()
+    # FillDB()
     contact_list = models.Question.objects.get_new_questions()
     for question in contact_list:
         question.answers_count = models.Answer.objects.get_answers_count(question)
@@ -127,7 +131,6 @@ def login(request):
 
 
 def logout(request):
-
     models.CurrentUser.profile = None
     models.CurrentUser.is_auth = False
 
@@ -190,3 +193,27 @@ def paginate(object_list, request, per_page=3):
         return HttpResponseBadRequest()
 
     return paginator.get_page(page_number)
+
+
+@api_view(['GET'])
+def questions_get(request, start: int, end: int, status: str):
+    if request.method == 'GET':
+        questions = models.Question.objects.filter(status__exact=status)[max(start - 1, 0):min(end, models.Question.objects.count())]
+        serializer = QuestionSerializer(questions, many=True)
+        return Response({"data": serializer.data}, status=200)
+
+
+@api_view(['GET'])
+def answers_get(request, question_id: int):
+    if request.method == 'GET':
+        answers = models.Answer.objects.get_answers(question_id)
+        serializer = AnswerSerializer(answers, many=True)
+        return Response({"data": serializer.data}, status=200)
+
+
+@api_view(['GET'])
+def profile_get(request, profile_id: int):
+    if request.method == 'GET':
+        profile = models.Profile.objects.find_by_id(profile_id)
+        serializer = ProfileSerializer(profile)
+        return Response({"data": serializer.data}, status=200)
