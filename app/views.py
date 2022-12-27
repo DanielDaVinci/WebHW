@@ -216,4 +216,6 @@ def profile_get(request, profile_id: int):
     if request.method == 'GET':
         profile = models.Profile.objects.find_by_id(profile_id)
         serializer = ProfileSerializer(profile)
-        return Response({"data": serializer.data}, status=200)
+        data = dict(serializer.data)
+        data["user"] = {"username": profile.user.username}
+        return Response({"data": data}, status=200)

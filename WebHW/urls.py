@@ -14,7 +14,7 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
     path('settings/', views.settings, name='settings'),
 
-    path('questions/get/start=<int:start>&end=<int:end>&status=<str:status>', views.questions_get),
-    path('answers/get/question_id=<int:question_id>/', views.answers_get),
-    path('profile/get/profile_id=<int:profile_id>/', views.profile_get)
+    path('questions/get/<int:start>/<int:end>/<str:status>', views.questions_get),
+    path('answers/get/<int:question_id>/', views.answers_get),
+    path('profile/get/<int:profile_id>/', views.profile_get)
 ]
